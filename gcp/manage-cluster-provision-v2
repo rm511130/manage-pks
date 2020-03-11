@@ -1,0 +1,36 @@
+#!/bin/bash
+# manage-cluster-v2 is a wrapper script used to create a cluster using manage-cluster
+#
+# Use: ./manage-cluster-provision-v2 <pks-cluster-name> <pks-cluster-plan> <gcp-managed-zone>
+#
+# The script calls, in sequence, both the manage-cluster provision and manage-cluster access commands
+
+CLUSTER_NAME=$1
+PKS_PLAN=$2
+MANAGED_ZONE=$3
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]
+then 
+     echo "Use: ./manage-cluster-provision-v2 <pks-cluster-name> <pks-cluster-plan> <gcp-managed-zone>"
+     exit 0
+else
+     echo "pks create-cluster $CLUSTER_NAME --plan $PKS_PLAN"
+fi
+
+   echo "$CLUSTER_NAME" > input-file.txt
+   echo "$PKS_PLAN" >> input-file.txt
+   echo "$MANAGED_ZONE" >> input-file.txt
+   ./manage-cluster provision < ./input-file.txt 
+   in_progress=$(pks cluster "$CLUSTER_NAME" | grep 'Last Action State:' | grep 'in progress'); 
+
+date
+while [ ! -z "$in_progress" ]
+do
+   in_progress=$(pks cluster "$CLUSTER_NAME" | grep 'Last Action State:' | grep 'in progress'); 
+   sleep 3
+   printf "."
+done
+rm ./input-file.txt
+date
+
+echo "$CLUSTER_NAME" | ./manage-cluster access
