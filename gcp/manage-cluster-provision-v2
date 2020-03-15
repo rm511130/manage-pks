@@ -4,6 +4,7 @@
 # Use: ./manage-cluster-provision-v2 <pks-cluster-name> <pks-cluster-plan> <gcp-managed-zone>
 #
 # The script calls, in sequence, both the manage-cluster provision and manage-cluster access commands
+# You are expected to be pks logged in and gcloud auth logged in for this script to work
 
 CLUSTER_NAME=$1
 PKS_PLAN=$2
