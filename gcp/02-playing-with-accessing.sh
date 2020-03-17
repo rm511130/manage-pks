@@ -4,8 +4,9 @@
 # Using differeny devops1, devops2, ... cluster owners with management scope
 # respectively
 
-for i in {1..2}
+for i in {2..3}
 do 
 	pks login -a https://api.pks.pks4u.com:9021 -u devops$i -p password -k
 	echo "user$i-cluster" | ./manage-cluster access
 done
+pks login -a https://api.pks.pks4u.com:9021 -u pks_admin -p password -k

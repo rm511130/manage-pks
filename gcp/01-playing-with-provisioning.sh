@@ -17,3 +17,5 @@ do
    echo "Finished working on user$i"
 done
 rm ./input-file.txt
+pks login -a https://api.pks.pks4u.com:9021 -u pks_admin -p password -k
+
