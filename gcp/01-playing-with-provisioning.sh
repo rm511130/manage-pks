@@ -5,7 +5,7 @@
 # with scope to see only the cluster he/she is creating
 # To see all clusters, you will need to use the pks_admin user
 
-for i in {1..2}
+for i in {2..3}
 do
    echo "Working on user devops$i to create user$i-cluster"
    pks login -a https://api.pks.pks4u.com:9021 -u devops$i -p password -k
